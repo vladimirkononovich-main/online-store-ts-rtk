@@ -1,0 +1,69 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  flex-basis: 1440px;
+  max-width: 1440px;
+  height: 80px;
+  margin: 0 auto;
+  background: url(../../assets/online-store-logo.svg) no-repeat 50% 60%;
+  background-color: wheat;
+}
+.header__nav {
+  display: flex;
+  padding-left: 101px;
+  box-sizing: border-box;
+}
+.header__category-filter-btn {
+  font-family: "Raleway", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 120%;
+  text-transform: uppercase;
+  color: #1d1f22;
+  text-decoration: none;
+  display: block;
+  padding: 28px 16px 30px;
+  box-sizing: border-box;
+}
+.header__category-filter-btn:hover {
+  cursor: pointer;
+}
+.header__category-filter-btn_active {
+  font-weight: 600;
+  color: #5ece7b;
+  border-bottom: 2px solid#5ECE7B;
+}
+.header__menu-wrapper {
+  display: flex;
+  margin-right: 144px;
+  position: relative;
+  outline: 1px solid red;
+}
+/* .header__currency-label {
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  color: #1d1f22;
+  line-height: 160%;
+  margin: 28.5px 10px 0 0;
+}
+.header__currency-switcher-btn {
+  width: 7px;
+  height: 7px;
+  padding: 0;
+  transform: rotate(45deg);
+  margin: 43px 0 0 0;
+  border: none;
+  border-bottom: 1px solid#1d1f22;
+  border-right: 1px solid#1d1f22;
+  background: none;
+  cursor: pointer;
+}
+.header__currency-switcher-btn_active {
+  margin-top: 46px;
+  border: none;
+  border-top: 1px solid#1d1f22;
+  border-left: 1px solid#1d1f22;
+} */

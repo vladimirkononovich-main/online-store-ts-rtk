@@ -1,0 +1,55 @@
+.currency-label {
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  color: #1d1f22;
+  line-height: 160%;
+  margin: 28.5px 10px 0 0;
+}
+.currency-switcher-btn {
+  width: 7px;
+  height: 7px;
+  padding: 0;
+  transform: rotate(45deg);
+  margin: 43px 0 0 0;
+  border: none;
+  border-bottom: 1px solid#1d1f22;
+  border-right: 1px solid#1d1f22;
+  background: none;
+  cursor: pointer;
+}
+.currency-switcher-btn_active {
+  margin-top: 46px;
+  border: none;
+  border-top: 1px solid#1d1f22;
+  border-left: 1px solid#1d1f22;
+}
+
+.drop-down-currencies {
+  position: absolute;
+  top: 80px;
+  left: -20px;
+  max-width: 114px;
+  min-width: 114px;
+  background: #ffffff;
+  filter: drop-shadow(0px 4px 35px rgba(168, 172, 176, 0.19));
+}
+.drop-down-currencies__btn {
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 160%;
+  color: #1d1f22;
+  min-height: 45px;
+  box-sizing: border-box;
+  padding: 8px 0 8px 20px;
+}
+.drop-down-currencies__btn:hover {
+  cursor: pointer;
+  background: #eeeeee;
+}
+.drop-down-currencies__btn_active {
+  background: #eeeeee;
+}
