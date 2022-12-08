@@ -1,41 +1,62 @@
 import classNames from "classnames";
 import * as _ from "lodash";
-import React from "react";
-import { Currencies, setCurrentCurrency } from "../../redux/dataSlice";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
+import React, { useEffect } from "react";
+import { Currencies, setCurrentCurrency } from "../../../redux/dataSlice";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks/hooks";
+import { IDropDowns } from "../models";
 import "./dropDownCurrencies.css";
 
 interface IDropDownCurrenciesProps {
   currencies: Currencies[];
-  dropDown: {
-    dropDownCurrencies: boolean;
-  };
-  setDropDown: (value: { dropDownCurrencies: boolean }) => void;
+  dropDowns: IDropDowns;
+  setDropDown: (value: IDropDowns) => void;
+  hideDropDowns: () => void;
 }
 
 function DropDownCurrencies({
   currencies,
   setDropDown,
-  dropDown,
+  dropDowns,
+  hideDropDowns,
 }: IDropDownCurrenciesProps) {
   const { currentCurrency } = useAppSelector((state) => state.onlineStoreData);
   const dispatch = useAppDispatch();
 
+  // useEffect(() => {
+  //   document.body.addEventListener("click", hideDropDowns);
+  // }, []);
+
   return (
     <>
-      <h3 className="currency-label">{currentCurrency?.symbol}</h3>
+      <h3
+        className="currency-label"
+        onClick={(e) => {
+          e.stopPropagation();
+          document.body.addEventListener("click", hideDropDowns);
+          document.body.addEventListener("keydown", hideDropDowns);
+
+          setDropDown({
+            dropDownCart: false,
+            dropDownCurrencies: !dropDowns.dropDownCurrencies,
+          });
+        }}
+      >
+        {currentCurrency?.symbol}
+      </h3>
       <button
         className={classNames("currency-switcher-btn", {
-          "currency-switcher-btn_active": dropDown.dropDownCurrencies,
+          "currency-switcher-btn_active": dropDowns.dropDownCurrencies,
         })}
-        onClick={() =>
+        onClick={(e) => {
+          e.stopPropagation();
+          document.body.addEventListener("click", hideDropDowns);
           setDropDown({
-            ...dropDown,
-            dropDownCurrencies: !dropDown.dropDownCurrencies,
-          })
-        }
+            dropDownCart: false,
+            dropDownCurrencies: !dropDowns.dropDownCurrencies,
+          });
+        }}
       ></button>
-      {dropDown.dropDownCurrencies && (
+      {dropDowns.dropDownCurrencies && (
         <div className="drop-down-currencies">
           {currencies.map((currency, index) => {
             return (
@@ -50,7 +71,7 @@ function DropDownCurrencies({
                 onClick={() => {
                   dispatch(setCurrentCurrency(currency));
                   setDropDown({
-                    ...dropDown,
+                    ...dropDowns,
                     dropDownCurrencies: false,
                   });
                 }}

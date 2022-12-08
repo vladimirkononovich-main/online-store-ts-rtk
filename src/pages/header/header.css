@@ -1,4 +1,9 @@
 .header {
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  right: 0;
+  left: 0;
   display: flex;
   justify-content: space-between;
   flex-basis: 1440px;
@@ -6,7 +11,7 @@
   height: 80px;
   margin: 0 auto;
   background: url(../../assets/online-store-logo.svg) no-repeat 50% 60%;
-  background-color: wheat;
+  background-color: white;
 }
 .header__nav {
   display: flex;
@@ -36,34 +41,6 @@
 }
 .header__menu-wrapper {
   display: flex;
-  margin-right: 144px;
+  margin-right: 80px;
   position: relative;
-  outline: 1px solid red;
 }
-/* .header__currency-label {
-  font-family: "Raleway";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 18px;
-  color: #1d1f22;
-  line-height: 160%;
-  margin: 28.5px 10px 0 0;
-}
-.header__currency-switcher-btn {
-  width: 7px;
-  height: 7px;
-  padding: 0;
-  transform: rotate(45deg);
-  margin: 43px 0 0 0;
-  border: none;
-  border-bottom: 1px solid#1d1f22;
-  border-right: 1px solid#1d1f22;
-  background: none;
-  cursor: pointer;
-}
-.header__currency-switcher-btn_active {
-  margin-top: 46px;
-  border: none;
-  border-top: 1px solid#1d1f22;
-  border-left: 1px solid#1d1f22;
-} */

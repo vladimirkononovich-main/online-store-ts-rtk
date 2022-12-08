@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client";
 import classNames from "classnames";
-import React, { useEffect, useState } from "react";
+import React, { SyntheticEvent, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   GET_CATEGORY_NAMES,
@@ -9,8 +9,9 @@ import {
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 import { setCurrencies } from "../../redux/dataSlice";
 import "./header.css";
-import DropDownCurrencies from "./DropDownCurrencies";
+import DropDownCurrencies from "./dropCurrencies/DropDownCurrencies";
 import ErrorHandler from "../../components/ErrorHandler";
+import DropDownCart from "./dropCart/DropDownCart";
 
 interface ICategoryNames {
   name: string;
@@ -29,8 +30,9 @@ function Header() {
   const { currencies } = useAppSelector((state) => state.onlineStoreData);
   const { pathname } = useLocation();
   const [categoryNames, setCategoryNames] = useState([]);
-  const [dropDown, setDropDown] = useState({
+  const [dropDowns, setDropDown] = useState({
     dropDownCurrencies: false,
+    dropDownCart: false,
   });
 
   useEffect(() => {
@@ -44,6 +46,11 @@ function Header() {
       dispatch(setCurrencies(currenciesData.currencies));
     }
   }, [currenciesData]);
+
+  const hideDropDowns = () => {
+    setDropDown({ dropDownCart: false, dropDownCurrencies: false });
+    document.body.removeEventListener("click", hideDropDowns);
+  };
 
   return (
     <div className="header">
@@ -76,8 +83,14 @@ function Header() {
         />
         <DropDownCurrencies
           currencies={currencies}
-          dropDown={dropDown}
+          dropDowns={dropDowns}
           setDropDown={setDropDown}
+          hideDropDowns={hideDropDowns}
+        />
+        <DropDownCart
+          dropDowns={dropDowns}
+          setDropDown={setDropDown}
+          hideDropDowns={hideDropDowns}
         />
       </div>
     </div>
