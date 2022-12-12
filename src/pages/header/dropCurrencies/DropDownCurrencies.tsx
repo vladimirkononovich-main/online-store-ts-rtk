@@ -1,13 +1,14 @@
 import classNames from "classnames";
 import * as _ from "lodash";
 import React, { useEffect } from "react";
-import { Currencies, setCurrentCurrency } from "../../../redux/dataSlice";
+import { Currency } from "../../../models/dataModels";
+import { setCurrentCurrency } from "../../../redux/dataSlice";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks/hooks";
-import { IDropDowns } from "../models";
+import { IDropDowns } from "../headerModels";
 import "./dropDownCurrencies.css";
 
 interface IDropDownCurrenciesProps {
-  currencies: Currencies[];
+  currencies: Currency[];
   dropDowns: IDropDowns;
   setDropDown: (value: IDropDowns) => void;
   hideDropDowns: () => void;
@@ -21,10 +22,6 @@ function DropDownCurrencies({
 }: IDropDownCurrenciesProps) {
   const { currentCurrency } = useAppSelector((state) => state.onlineStoreData);
   const dispatch = useAppDispatch();
-
-  // useEffect(() => {
-  //   document.body.addEventListener("click", hideDropDowns);
-  // }, []);
 
   return (
     <>

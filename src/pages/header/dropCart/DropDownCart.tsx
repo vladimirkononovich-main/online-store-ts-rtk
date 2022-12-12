@@ -1,5 +1,5 @@
 import React from "react";
-import { IDropDowns } from "../models";
+import { IDropDowns } from "../headerModels";
 import "./dropDownCart.css";
 
 interface IDropDownCartProps {

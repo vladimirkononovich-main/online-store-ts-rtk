@@ -1,0 +1,104 @@
+.product {
+  margin: 160px auto 0;
+  padding: 0 0 0 100px;
+  box-sizing: border-box;
+  display: grid;
+  max-width: 1440px;
+  outline: 1px solid red;
+  grid-template-columns: 119px 710px 300px;
+}
+.product__gallery,
+.product__current-img,
+.product__menu,
+.product__gallery-img,
+.product__name,
+.product__brand {
+  outline: 1px solid red;
+}
+.product__gallery {
+  max-height: 511px;
+  overflow-y: auto;
+}
+.product__gallery-img {
+  object-fit: contain;
+  width: 79px;
+  height: 80px;
+  margin-bottom: 36px;
+  cursor: pointer;
+}
+.product__gallery-img:last-child {
+  margin: 0;
+}
+.product__current-img {
+  width: 610px;
+  height: 511px;
+  object-fit: contain;
+}
+.product__name,
+.product__brand {
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 27px;
+  color: #1d1f22;
+  margin: 0;
+}
+.product__brand {
+  margin-bottom: 16px;
+}
+.product__name {
+  font-weight: 500;
+  margin-bottom: 43px;
+}
+.product__attr-wrapper {
+  margin: 0 0 36px 0;
+}
+.product__attr {
+  margin-bottom: 24px;
+}
+.product__attr:last-child {
+  margin-bottom: 0;
+}
+.product__price-title {
+  font-family: "Roboto Condensed", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 18px;
+  color: #1d1f22;
+  text-transform: uppercase;
+  margin-bottom: 25px;
+}
+.product__price {
+  margin-bottom: 34px;
+}
+.product__add-product-btn {
+  font-family: "Raleway", sans-serif;
+  color: #ffffff;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 120%;
+  width: 292px;
+  height: 52px;
+  text-transform: uppercase;
+  background: #5ece7b;
+  border: none;
+  margin-bottom: 38px;
+}
+.product__add-product-btn:hover {
+  opacity: 0.9;
+  cursor: pointer;
+}
+.product__add-product-btn:active {
+  opacity: 1;
+}
+.product__description {
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 159.96%;
+  color: #1d1f22;
+}
