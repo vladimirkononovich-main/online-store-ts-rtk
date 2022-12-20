@@ -50,6 +50,7 @@ function CategoryPage() {
               </h3>
               <ProductPrice
                 prices={product.prices}
+                className="category"
                 view="normal"
               />
               <button className="category__card-btn"></button>

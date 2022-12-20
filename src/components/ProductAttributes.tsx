@@ -5,7 +5,7 @@ import { Attribute } from "../models/dataModels";
 interface IProductAttribute {
   attribute: Attribute;
   attributes: ISelectedAttr;
-  setAttributes: (value: ISelectedAttr) => void;
+  setAttributes?: (value: ISelectedAttr) => void;
   className: string;
   view: string;
 }
@@ -23,29 +23,39 @@ function ProductAttribute({
   const typeText = attribute.type === "text";
   const typeSwatch = attribute.type === "swatch";
   const viewNormal = view === "normal";
-  const viewCompressed = view === "compressed";
-  const quantity = attribute.items.length;
+  const viewCondensed = view === "condensed";
+  const attrQuantity = attribute.items.length;
   const btnWidth =
-    (typeText && viewNormal && "63px") || (typeSwatch && viewNormal && "32px");
+    (typeText && viewNormal && "63px") ||
+    (typeSwatch && viewNormal && "32px") ||
+    (typeText && viewCondensed && "max-content") ||
+    (typeSwatch && viewCondensed && "16px");
 
+  const classes = {
+    attribute: className + "__product-attribute",
+  };
   const styles = {
-    gridTemplateColumns: `repeat(${quantity}, ${btnWidth})`,
+    gridTemplateColumns: `repeat(${attrQuantity}, ${btnWidth})`,
   };
 
   return (
-    <div className={classNames("attribute", className)}>
+    <div className={classNames(classes.attribute)}>
       <h3
         className={classNames({
-          attribute__name_view_normal: view === "normal",
-          attribute__name_view_compressed: view === "compressed",
+          attribute__name_normal: viewNormal,
+          attribute__name_condensed: viewCondensed,
         })}
       >
         {attribute.name + ":"}
       </h3>
       <div
         className={classNames({
-          "attribute__btn-wrapper_text": typeText,
-          "attribute__btn-wrapper_swatch": typeSwatch,
+          "attribute__btn-wrapper_text_normal": typeText && viewNormal,
+          "attribute__btn-wrapper_text_condensed": typeText && viewCondensed,
+
+          "attribute__btn-wrapper_swatch_normal": typeSwatch && viewNormal,
+          "attribute__btn-wrapper_swatch_condensed":
+            typeSwatch && viewCondensed,
         })}
         style={styles}
       >
@@ -58,19 +68,17 @@ function ProductAttribute({
                 border: `1px solid ${item.value === "#FFFFFF" && "gray"}`,
               }}
               onClick={() => {
+                if (!setAttributes) return;
                 setAttributes({
                   ...attributes,
                   [attribute.id]: item.id,
                 });
               }}
               className={classNames({
-                attribute__btn_text: typeText,
-                attribute__btn_swatch: typeSwatch,
-                attribute__btn_view_normal_text: typeText && viewNormal,
-                attribute__btn_view_normal_swatch: typeSwatch && viewNormal,
-                attribute__btn_view_compressed_swatch:
-                  typeSwatch && viewCompressed,
-                attribute__btn_view_compressed_text: typeText && viewCompressed,
+                attribute__btn_text_normal: typeText && viewNormal,
+                attribute__btn_swatch_normal: typeSwatch && viewNormal,
+                attribute__btn_text_condensed: typeText && viewCondensed,
+                attribute__btn_swatch_condensed: typeSwatch && viewCondensed,
                 attribute__btn_text_active:
                   typeText && attributes[attribute.id] === item.id,
                 attribute__btn_swatch_active:

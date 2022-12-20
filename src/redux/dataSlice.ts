@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import _ from "lodash";
+import _, { result } from "lodash";
 import {
   Currency,
   ICartProducts,
@@ -52,10 +52,35 @@ export const dataSlice = createSlice({
           : [...state.cartProducts, action.payload],
       };
     },
+    changeProductQuantity: (state, action: PayloadAction<ICartProducts>) => {
+      const products = state.cartProducts.map((p) => {
+        if (
+          _.isEqual(p.product, action.payload.product) &&
+          _.isEqual(p.selectedAttrs, action.payload.selectedAttrs)
+        ) {
+          return action.payload;
+        }
+        return p;
+      });
+
+      return { ...state, cartProducts: products };
+    },
+    removeProduct: (state, action: PayloadAction<ICartProducts>) => {
+      const filteredProducts = state.cartProducts.filter((p) => {
+        return !_.isEqual(p, action.payload);
+      });
+
+      return { ...state, cartProducts: filteredProducts };
+    },
   },
 });
 
-export const { setCurrencies, setCurrentCurrency, addProductToCart } =
-  dataSlice.actions;
+export const {
+  setCurrencies,
+  setCurrentCurrency,
+  addProductToCart,
+  changeProductQuantity,
+  removeProduct,
+} = dataSlice.actions;
 
 export default dataSlice.reducer;

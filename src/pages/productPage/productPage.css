@@ -54,10 +54,10 @@
 .product__attr-wrapper {
   margin: 0 0 36px 0;
 }
-.product__attr {
+.product__product-attribute {
   margin-bottom: 24px;
 }
-.product__attr:last-child {
+.product__product-attribute:last-child {
   margin-bottom: 0;
 }
 .product__price-title {
@@ -70,7 +70,7 @@
   text-transform: uppercase;
   margin-bottom: 25px;
 }
-.product__price {
+.product__product-price {
   margin-bottom: 34px;
 }
 .product__add-product-btn {

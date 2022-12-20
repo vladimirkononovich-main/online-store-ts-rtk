@@ -49,7 +49,7 @@ function Header() {
 
   const hideDropDowns = () => {
     setDropDown({ dropDownCart: false, dropDownCurrencies: false });
-    document.body.removeEventListener("click", hideDropDowns);
+    // document.body.removeEventListener("click", hideDropDowns);
   };
 
   return (

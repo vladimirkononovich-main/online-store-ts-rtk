@@ -82,7 +82,7 @@ function ProductPage() {
                 attribute={attr}
                 attributes={attributes}
                 setAttributes={setAttributes}
-                className="product__attr"
+                className="product"
                 view="normal"
                 key={index}
               />
@@ -93,7 +93,7 @@ function ProductPage() {
         <ProductPrice
           prices={product.prices}
           view="bold"
-          className="product__price"
+          className="product"
         />
         <button
           className="product__add-product-btn"
