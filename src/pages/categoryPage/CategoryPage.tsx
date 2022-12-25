@@ -5,24 +5,18 @@ import { Link, useLocation, useParams } from "react-router-dom";
 import ErrorHandler from "../../components/ErrorHandler";
 import ProductPrice from "../../components/ProductPrice";
 import { GET_CATEGORY_PRODUCTS } from "../../queries/onlineStoreData";
-import { useAppSelector } from "../../redux/hooks/hooks";
+import { addProductToCart } from "../../redux/dataSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 import "./categoryPage.css";
-// import { IProduct, Price } from "../../models/dataModels";
 
 function CategoryPage() {
   const { categoryId } = useParams();
-  // const [products, setProducts] = useState([]);
+  const dispatch = useAppDispatch();
   const { data, loading, error } = useQuery(GET_CATEGORY_PRODUCTS, {
     variables: {
-      categoryId: categoryId || "",
+      categoryId: categoryId!,
     },
   });
-
-  // useEffect(() => {
-  //   if (!loading) {
-  //     setProducts(data?.category?.products);
-  //   }
-  // });
 
   if (loading) {
     return (
@@ -43,6 +37,20 @@ function CategoryPage() {
           loadingMessage="Loading products..."
         />
         {data?.category?.products.map((product) => {
+          const selectedAttrs: { [key: string]: string } = {};
+
+          const attrs = product?.attributes!.map((attr) => {
+            return {
+              [attr!.id]: attr!.items![0]!.id,
+            };
+          });
+          attrs?.forEach((attr) => {
+            const key = Object.keys(attr)[0];
+            const value = Object.values(attr)[0];
+
+            selectedAttrs[key] = value;
+          });
+
           return (
             <Link to={product!.id} className="category__card" key={product!.id}>
               <img
@@ -58,7 +66,19 @@ function CategoryPage() {
                 className="category"
                 view="normal"
               />
-              <button className="category__card-btn"></button>
+              <button
+                className="category__card-btn"
+                onClick={(e) => {
+                  e.preventDefault();
+                  dispatch(
+                    addProductToCart({
+                      product: product!,
+                      quantity: 1,
+                      selectedAttrs,
+                    })
+                  );
+                }}
+              ></button>
             </Link>
           );
         })}

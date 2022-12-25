@@ -39,29 +39,29 @@ export const dataSlice = createSlice({
         currentCurrency: action.payload,
       };
     },
-      addProductToCart: (state, action: PayloadAction<ICartProducts>) => {
-        let isSameProduct = false;
-        const products = state.cartProducts.map((p) => {
-          if (
-            _.isEqual(p.selectedAttrs, action.payload.selectedAttrs) &&
-            _.isEqual(p.product, action.payload.product)
-          ) {
-            isSameProduct = true;
-            return {
-              ...p,
-              quantity: p.quantity + 1,
-            };
-          }
-          return p;
-        });
+    addProductToCart: (state, action: PayloadAction<ICartProducts>) => {
+      let isSameProduct = false;
+      const products = state.cartProducts.map((p) => {
+        if (
+          _.isEqual(p.selectedAttrs, action.payload.selectedAttrs) &&
+          _.isEqual(p.product, action.payload.product)
+        ) {
+          isSameProduct = true;
+          return {
+            ...p,
+            quantity: p.quantity + 1,
+          };
+        }
+        return p;
+      });
 
-        return {
-          ...state,
-          cartProducts: isSameProduct
-            ? products
-            : [...state.cartProducts, action.payload],
-        };
-      },
+      return {
+        ...state,
+        cartProducts: isSameProduct
+          ? products
+          : [...state.cartProducts, action.payload],
+      };
+    },
     changeProductQuantity: (state, action: PayloadAction<ICartProducts>) => {
       const products = state.cartProducts.map((p) => {
         if (
@@ -73,15 +73,15 @@ export const dataSlice = createSlice({
         return p;
       });
 
-        return { ...state, cartProducts: products };
-      },
-      removeProduct: (state, action: PayloadAction<ICartProducts>) => {
-        const filteredProducts = state.cartProducts.filter((p) => {
-          return !_.isEqual(p, action.payload);
-        });
+      return { ...state, cartProducts: products };
+    },
+    removeProduct: (state, action: PayloadAction<ICartProducts>) => {
+      const filteredProducts = state.cartProducts.filter((p) => {
+        return !_.isEqual(p, action.payload);
+      });
 
-        return { ...state, cartProducts: filteredProducts };
-      },
+      return { ...state, cartProducts: filteredProducts };
+    },
   },
 });
 

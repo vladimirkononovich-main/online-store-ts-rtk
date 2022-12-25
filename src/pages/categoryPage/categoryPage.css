@@ -69,3 +69,6 @@
   cursor: pointer;
   background: url(../../assets/category-card-btn.svg) no-repeat center #5ece7b;
 }
+.category__card-btn:active {
+  opacity: 0.8;
+}
