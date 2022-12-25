@@ -22,7 +22,6 @@
   grid-row-gap: 103px;
   max-width: 1238px;
   margin: 0 auto;
-  outline: 1px solid red;
 }
 .category__card {
   position: relative;
@@ -34,7 +33,6 @@
   overflow-wrap: break-word;
   padding: 16px;
   box-sizing: border-box;
-  outline: 1px solid red;
   text-decoration: none;
 }
 .category__card:hover {

@@ -4,17 +4,9 @@
   box-sizing: border-box;
   display: grid;
   max-width: 1440px;
-  outline: 1px solid red;
   grid-template-columns: 119px 710px 300px;
 }
-.product__gallery,
-.product__current-img,
-.product__menu,
-.product__gallery-img,
-.product__name,
-.product__brand {
-  outline: 1px solid red;
-}
+
 .product__gallery {
   max-height: 511px;
   overflow-y: auto;
