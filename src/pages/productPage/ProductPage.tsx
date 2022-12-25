@@ -2,9 +2,9 @@ import { useQuery } from "@apollo/client";
 import { Interweave } from "interweave";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import ErrorHandler from "../../components/ErrorHandler";
 import ProductAttribute from "../../components/ProductAttributes";
 import ProductPrice from "../../components/ProductPrice";
-import { Product } from "../../models/dataModels";
 import { GET_PRODUCT } from "../../queries/onlineStoreData";
 import { addProductToCart } from "../../redux/dataSlice";
 import { useAppDispatch } from "../../redux/hooks/hooks";
@@ -17,21 +17,21 @@ interface ISelectedAttr {
 function ProductPage() {
   const dispatch = useAppDispatch();
   const { productId } = useParams();
-  const [product, setProduct] = useState<Product>();
   const [currentImg, setCurrentImg] = useState(0);
   const [attributes, setAttributes] = useState<ISelectedAttr>({});
   const { data, loading, error } = useQuery(GET_PRODUCT, {
     variables: {
-      productId,
+      productId: productId!,
     },
   });
 
   useEffect(() => {
+    const product = data?.product;
     const result: ISelectedAttr = {};
 
-    const attrs = product?.attributes.map((attr) => {
+    const attrs = product?.attributes!.map((attr) => {
       return {
-        [attr.id]: attr.items[0].id,
+        [attr!.id]: attr!.items![0]!.id,
       };
     });
     attrs?.forEach((attr) => {
@@ -41,26 +41,27 @@ function ProductPage() {
       result[key] = value;
     });
     setAttributes(result);
-  }, [product]);
+  }, [data?.product]);
 
-  useEffect(() => {
-    if (!loading) {
-      setProduct(data.product);
-    }
-  });
 
-  if (!product) {
-    return <h2>Product is loading...</h2>;
+  if (loading) {
+    return (
+      <ErrorHandler
+        errorMessage={error?.message}
+        loading={loading}
+        loadingMessage="Product is loading..."
+      />
+    );
   }
 
   return (
     <main className="product">
       <div className="product__gallery">
-        {product?.gallery.map((src, index) => {
+        {data?.product?.gallery!.map((src, index) => {
           return (
             <img
               key={index}
-              src={src}
+              src={src!}
               alt="Img not loaded"
               className="product__gallery-img"
               onClick={() => setCurrentImg(index)}
@@ -70,16 +71,16 @@ function ProductPage() {
       </div>
       <img
         className="product__current-img"
-        src={product?.gallery[currentImg]}
+        src={data?.product?.gallery![currentImg]!}
       />
       <div className="product__menu">
-        <h3 className="product__brand">{product?.brand}</h3>
-        <h3 className="product__name">{product?.name}</h3>
+        <h3 className="product__brand">{data?.product?.brand}</h3>
+        <h3 className="product__name">{data?.product?.name}</h3>
         <div className="product__attr-wrapper">
-          {product.attributes.map((attr, index) => {
+          {data?.product?.attributes!.map((attr, index) => {
             return (
               <ProductAttribute
-                attribute={attr}
+                attribute={attr!}
                 attributes={attributes}
                 setAttributes={setAttributes}
                 className="product"
@@ -91,7 +92,7 @@ function ProductPage() {
         </div>
         <h3 className="product__price-title">price:</h3>
         <ProductPrice
-          prices={product.prices}
+          prices={data?.product?.prices!}
           view="bold"
           className="product"
         />
@@ -101,7 +102,7 @@ function ProductPage() {
             dispatch(
               addProductToCart({
                 selectedAttrs: attributes,
-                product,
+                product: data?.product!,
                 quantity: 1,
               })
             )
@@ -110,7 +111,7 @@ function ProductPage() {
           Add to cart
         </button>
         <Interweave
-          content={product.description}
+          content={data?.product?.description}
           className="product__description"
         />
       </div>

@@ -2,16 +2,16 @@ import classNames from "classnames";
 import _ from "lodash";
 import React from "react";
 import "./components.css";
-import { Price } from "../models/dataModels";
 import { useAppSelector } from "../redux/hooks/hooks";
+import { Price } from "../__generated__/graphql";
 
-interface IPrices {
+interface IProductPrice {
   prices: Price[];
   className?: string;
   view: string;
 }
 
-function ProductPrice({ prices, className, view }: IPrices) {
+function ProductPrice({ prices, className, view }: IProductPrice) {
   const { currentCurrency } = useAppSelector((state) => state.onlineStoreData);
 
   const price = prices.filter((p) => {
@@ -19,8 +19,8 @@ function ProductPrice({ prices, className, view }: IPrices) {
   });
 
   const classes = {
-    price: className + "__product-price"
-  }
+    price: className + "__product-price",
+  };
 
   return (
     <h3
@@ -28,6 +28,7 @@ function ProductPrice({ prices, className, view }: IPrices) {
         price_normal: view === "normal",
         price_bold: view === "bold",
         price_condensed: view === "condensed",
+        price_uncondensed: view === "uncondensed",
       })}
     >
       {price[0]?.currency.symbol}

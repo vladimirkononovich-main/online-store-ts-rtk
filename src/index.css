@@ -7,6 +7,9 @@ body,
   margin: 0;
   /* background-color: gray; */
 }
+* {
+  /* outline: 1px solid red; */
+}
 /* font-family: 'Raleway', sans-serif;
 font-family: 'Roboto Condensed', sans-serif;
 font-family: 'Shadows Into Light', cursive;

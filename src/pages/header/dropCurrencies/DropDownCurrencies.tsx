@@ -1,27 +1,39 @@
+import { useQuery } from "@apollo/client";
 import classNames from "classnames";
 import * as _ from "lodash";
 import React, { useEffect } from "react";
-import { Currency } from "../../../models/dataModels";
+import ErrorHandler from "../../../components/ErrorHandler";
+// import { Currency } from "../../../models/dataModels";
+import { GET_CURRENCIES } from "../../../queries/onlineStoreData";
 import { setCurrentCurrency } from "../../../redux/dataSlice";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks/hooks";
 import { IDropDowns } from "../headerModels";
 import "./dropDownCurrencies.css";
 
 interface IDropDownCurrenciesProps {
-  currencies: Currency[];
   dropDowns: IDropDowns;
   setDropDown: (value: IDropDowns) => void;
-  hideDropDowns: () => void;
+  // hideDropDowns: () => void;
 }
 
 function DropDownCurrencies({
-  currencies,
   setDropDown,
   dropDowns,
-  hideDropDowns,
+  // hideDropDowns,
 }: IDropDownCurrenciesProps) {
+  const { loading, error, data } = useQuery(GET_CURRENCIES);
   const { currentCurrency } = useAppSelector((state) => state.onlineStoreData);
   const dispatch = useAppDispatch();
+
+  if (loading) {
+    return (
+      <ErrorHandler
+        errorMessage={error?.message}
+        loading={loading}
+        loadingMessage="Loading currencies..."
+      />
+    );
+  }
 
   return (
     <>
@@ -29,8 +41,8 @@ function DropDownCurrencies({
         className="currency-label"
         onClick={(e) => {
           e.stopPropagation();
-          document.body.addEventListener("click", hideDropDowns);
-          document.body.addEventListener("keydown", hideDropDowns);
+          // document.body.addEventListener("click", hideDropDowns);
+          // document.body.addEventListener("keydown", hideDropDowns);
 
           setDropDown({
             dropDownCart: false,
@@ -46,7 +58,7 @@ function DropDownCurrencies({
         })}
         onClick={(e) => {
           e.stopPropagation();
-          document.body.addEventListener("click", hideDropDowns);
+          // document.body.addEventListener("click", hideDropDowns);
           setDropDown({
             dropDownCart: false,
             dropDownCurrencies: !dropDowns.dropDownCurrencies,
@@ -55,29 +67,30 @@ function DropDownCurrencies({
       ></button>
       {dropDowns.dropDownCurrencies && (
         <div className="drop-down-currencies">
-          {currencies.map((currency, index) => {
-            return (
-              <div
-                className={classNames("drop-down-currencies__btn", {
-                  "drop-down-currencies__btn_active": _.isEqual(
-                    currency,
-                    currentCurrency
-                  ),
-                })}
-                key={index}
-                onClick={() => {
-                  dispatch(setCurrentCurrency(currency));
-                  setDropDown({
-                    ...dropDowns,
-                    dropDownCurrencies: false,
-                  });
-                }}
-              >
-                {currency.symbol}&nbsp;
-                {currency.label}
-              </div>
-            );
-          })}
+          {!loading &&
+            data?.currencies!.map((currency, index) => {
+              return (
+                <div
+                  className={classNames("drop-down-currencies__btn", {
+                    "drop-down-currencies__btn_active": _.isEqual(
+                      currency,
+                      currentCurrency
+                    ),
+                  })}
+                  key={index}
+                  onClick={() => {
+                    dispatch(setCurrentCurrency(currency!));
+                    setDropDown({
+                      ...dropDowns,
+                      dropDownCurrencies: false,
+                    });
+                  }}
+                >
+                  {currency!.symbol}&nbsp;
+                  {currency!.label}
+                </div>
+              );
+            })}
         </div>
       )}
     </>

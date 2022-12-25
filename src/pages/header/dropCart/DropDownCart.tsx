@@ -1,5 +1,6 @@
 import _ from "lodash";
 import React from "react";
+import { Link, useParams } from "react-router-dom";
 import ProductAttribute from "../../../components/ProductAttributes";
 import ProductPrice from "../../../components/ProductPrice";
 import ProductQuantity from "../../../components/ProductQuantity";
@@ -10,17 +11,19 @@ import "./dropDownCart.css";
 interface IDropDownCartProps {
   dropDowns: IDropDowns;
   setDropDown: (value: IDropDowns) => void;
-  hideDropDowns: () => void;
+  hideDropDownsClick: (e: MouseEvent) => void;
 }
 
 function DropDownCart({
   dropDowns,
   setDropDown,
-  hideDropDowns,
+  hideDropDownsClick,
 }: IDropDownCartProps) {
+  const { categoryId } = useParams();
   const { cartProducts, currentCurrency } = useAppSelector(
     (state) => state.onlineStoreData
   );
+
   const cartProductsQuantity = cartProducts.reduce(
     (sum, current) => sum + current.quantity,
     0
@@ -40,7 +43,6 @@ function DropDownCart({
         className="drop-down-cart-btn"
         onClick={(e) => {
           e.stopPropagation();
-          // document.body.addEventListener("click", hideDropDowns);
           setDropDown({
             dropDownCurrencies: false,
             dropDownCart: !dropDowns.dropDownCart,
@@ -56,7 +58,12 @@ function DropDownCart({
       {dropDowns.dropDownCart && (
         <>
           <div className="backdrop"></div>
-          <div className="drop-down-cart">
+          <div
+            className="drop-down-cart"
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
             <h3 className="drop-down-cart__title">
               My Bag
               {cartProductsQuantity > 0 && (
@@ -85,10 +92,10 @@ function DropDownCart({
                             className="drop-down-cart"
                             key={index}
                           />
-                          {p.product.attributes.map((attr, index2) => {
+                          {p.product.attributes!.map((attr, index2) => {
                             return (
                               <ProductAttribute
-                                attribute={attr}
+                                attribute={attr!}
                                 attributes={p.selectedAttrs}
                                 view="condensed"
                                 className="drop-down-cart"
@@ -105,7 +112,7 @@ function DropDownCart({
                         />
                         <img
                           className="drop-down-cart__product-img"
-                          src={p.product.gallery[0]}
+                          src={p.product.gallery![0]!}
                           alt="not loaded"
                         />
                       </div>
@@ -120,9 +127,19 @@ function DropDownCart({
                   </h3>
                 </div>
                 <div className="drop-down-cart__btns-wrapper">
-                  <button className="drop-down-cart__view-bag-btn">
-                    view bag
-                  </button>
+                  <Link to={"/category/" + categoryId + "/cart"}>
+                    <button
+                      className="drop-down-cart__view-bag-btn"
+                      onClick={(e) =>
+                        setDropDown({
+                          dropDownCart: false,
+                          dropDownCurrencies: false,
+                        })
+                      }
+                    >
+                      view bag
+                    </button>
+                  </Link>
                   <button className="drop-down-cart__check-out-btn">
                     check out
                   </button>

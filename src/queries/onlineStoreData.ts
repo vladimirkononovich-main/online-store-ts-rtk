@@ -1,22 +1,22 @@
-import { gql } from "@apollo/client";
+import { gql } from '../__generated__/gql'
 
-export const GET_CATEGORY_NAMES = gql`
-  query {
+export const GET_CATEGORY_NAMES = gql(`
+  query getCategoryNames{
     categories {
       name
     }
   }
-`;
-export const GET_CURRENCIES = gql`
-  query {
+`);
+export const GET_CURRENCIES = gql(`
+  query getCurrencies{
     currencies {
       label
       symbol
     }
   }
-`;
-export const GET_CATEGORY_PRODUCTS = gql`
-  query ($categoryId: String!) {
+`);
+export const GET_CATEGORY_PRODUCTS = gql(`
+  query getProducts($categoryId: String!) {
     category(input: { title: $categoryId }) {
       products {
         id
@@ -45,9 +45,9 @@ export const GET_CATEGORY_PRODUCTS = gql`
       }
     }
   }
-`;
-export const GET_PRODUCT = gql`
-  query ($productId: String!) {
+`);
+export const GET_PRODUCT = gql(`
+  query getProduct($productId: String!) {
     product(id: $productId) {
       id
       name
@@ -75,4 +75,4 @@ export const GET_PRODUCT = gql`
       }
     }
   }
-`;
+`);

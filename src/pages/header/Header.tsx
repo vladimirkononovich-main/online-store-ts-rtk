@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import classNames from "classnames";
 import React, { SyntheticEvent, useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   GET_CATEGORY_NAMES,
   GET_CURRENCIES,
@@ -13,44 +13,52 @@ import DropDownCurrencies from "./dropCurrencies/DropDownCurrencies";
 import ErrorHandler from "../../components/ErrorHandler";
 import DropDownCart from "./dropCart/DropDownCart";
 
-interface ICategoryNames {
-  name: string;
-  __typename: string;
+interface IDropDowns {
+  dropDownCurrencies: boolean;
+  dropDownCart: boolean;
 }
 
 function Header() {
-  const { loading, error, data } = useQuery(GET_CATEGORY_NAMES);
-  const {
-    loading: loadingCurrencies,
-    error: currenciesError,
-    data: currenciesData,
-  } = useQuery(GET_CURRENCIES);
-
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { currencies } = useAppSelector((state) => state.onlineStoreData);
   const { pathname } = useLocation();
-  const [categoryNames, setCategoryNames] = useState([]);
+  const { loading, error, data } = useQuery(GET_CATEGORY_NAMES);
   const [dropDowns, setDropDown] = useState({
     dropDownCurrencies: false,
     dropDownCart: false,
   });
 
   useEffect(() => {
-    if (!loading) {
-      setCategoryNames(data.categories);
+    if (pathname === "/" && !loading) {
+      navigate("/category/" + data?.categories![0]?.name);
     }
-  }, [data]);
+  });
+
+  function hideDropDownsKeydown(ev: KeyboardEvent) {
+    if (ev.code === "Escape") {
+      setDropDown({
+        dropDownCurrencies: false,
+        dropDownCart: false,
+      });
+      document.body.removeEventListener("keydown", hideDropDownsKeydown);
+      document.body.removeEventListener("click", hideDropDownsClick);
+    }
+  }
+  function hideDropDownsClick(ev: MouseEvent) {
+    setDropDown({
+      dropDownCurrencies: false,
+      dropDownCart: false,
+    });
+    document.body.removeEventListener("keydown", hideDropDownsKeydown);
+    document.body.removeEventListener("click", hideDropDownsClick);
+  }
 
   useEffect(() => {
-    if (!loadingCurrencies) {
-      dispatch(setCurrencies(currenciesData.currencies));
+    if (dropDowns.dropDownCart || dropDowns.dropDownCurrencies) {
+      document.body.addEventListener("keydown", hideDropDownsKeydown);
+      document.body.addEventListener("click", hideDropDownsClick);
     }
-  }, [currenciesData]);
-
-  const hideDropDowns = () => {
-    setDropDown({ dropDownCart: false, dropDownCurrencies: false });
-    // document.body.removeEventListener("click", hideDropDowns);
-  };
+  }, [dropDowns]);
 
   return (
     <div className="header">
@@ -60,38 +68,25 @@ function Header() {
           loading={loading}
           loadingMessage="Loading category names..."
         />
-        {categoryNames.map((category: ICategoryNames) => {
-          return (
-            <Link
-              to={"/category/" + category.name}
-              className={classNames("header__category-filter-btn", {
-                "header__category-filter-btn_active":
-                  pathname.split("/")[2] === category.name,
-              })}
-              key={category.name}
-            >
-              {category.name}
-            </Link>
-          );
-        })}
+        {!loading &&
+          data?.categories!.map((category) => {
+            return (
+              <Link
+                to={"/category/" + category!.name}
+                className={classNames("header__category-filter-btn", {
+                  "header__category-filter-btn_active":
+                    pathname.split("/")[2] === category!.name,
+                })}
+                key={category!.name}
+              >
+                {category!.name}
+              </Link>
+            );
+          })}
       </nav>
       <div className="header__menu-wrapper">
-        <ErrorHandler
-          errorMessage={error?.message}
-          loading={loadingCurrencies}
-          loadingMessage="Loading currencies..."
-        />
-        <DropDownCurrencies
-          currencies={currencies}
-          dropDowns={dropDowns}
-          setDropDown={setDropDown}
-          hideDropDowns={hideDropDowns}
-        />
-        <DropDownCart
-          dropDowns={dropDowns}
-          setDropDown={setDropDown}
-          hideDropDowns={hideDropDowns}
-        />
+        <DropDownCurrencies dropDowns={dropDowns} setDropDown={setDropDown} />
+        <DropDownCart dropDowns={dropDowns} setDropDown={setDropDown} hideDropDownsClick={hideDropDownsClick}/>
       </div>
     </div>
   );
