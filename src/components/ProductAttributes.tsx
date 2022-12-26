@@ -1,7 +1,6 @@
 import classNames from "classnames";
 import React, { useEffect, useState } from "react";
 import { AttributeSet } from "../__generated__/graphql";
-// import { Attribute } from "../models/dataModels";
 
 interface IProductAttribute {
   attribute: AttributeSet;
@@ -57,14 +56,11 @@ function ProductAttribute({
         className={classNames({
           "attribute__btn-wrapper_text_normal": typeText && viewNormal,
           "attribute__btn-wrapper_text_condensed": typeText && viewCondensed,
-          "attribute__btn-wrapper_text_uncondensed":
-            typeText && viewUncondensed,
+          "attribute__btn-wrapper_text_uncondensed": typeText && viewUncondensed,
 
           "attribute__btn-wrapper_swatch_normal": typeSwatch && viewNormal,
-          "attribute__btn-wrapper_swatch_condensed":
-            typeSwatch && viewCondensed,
-          "attribute__btn-wrapper_swatch_uncondensed":
-            typeSwatch && viewUncondensed,
+          "attribute__btn-wrapper_swatch_condensed": typeSwatch && viewCondensed,
+          "attribute__btn-wrapper_swatch_uncondensed": typeSwatch && viewUncondensed,
         })}
         style={styles}
       >
@@ -90,13 +86,10 @@ function ProductAttribute({
 
                 attribute__btn_swatch_normal: typeSwatch && viewNormal,
                 attribute__btn_swatch_condensed: typeSwatch && viewCondensed,
-                attribute__btn_swatch_uncondensed:
-                  typeSwatch && viewUncondensed,
+                attribute__btn_swatch_uncondensed: typeSwatch && viewUncondensed,
 
-                attribute__btn_text_active:
-                  typeText && attributes[attribute.id] === item!.id,
-                attribute__btn_swatch_active:
-                  typeSwatch && attributes[attribute.id] === item!.id,
+                attribute__btn_text_active: typeText && attributes[attribute.id] === item!.id,
+                attribute__btn_swatch_active: typeSwatch && attributes[attribute.id] === item!.id,
               })}
             >
               {typeText && item!.value}

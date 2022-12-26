@@ -6,7 +6,6 @@
   max-width: 1440px;
   grid-template-columns: 119px 710px 300px;
 }
-
 .product__gallery {
   max-height: 511px;
   overflow-y: auto;

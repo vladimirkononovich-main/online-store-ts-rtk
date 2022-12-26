@@ -11,13 +11,11 @@ import "./dropDownCart.css";
 interface IDropDownCartProps {
   dropDowns: IDropDowns;
   setDropDown: (value: IDropDowns) => void;
-  hideDropDownsClick: (e: MouseEvent) => void;
 }
 
 function DropDownCart({
   dropDowns,
   setDropDown,
-  hideDropDownsClick,
 }: IDropDownCartProps) {
   const { categoryId } = useParams();
   const { cartProducts, currentCurrency } = useAppSelector(

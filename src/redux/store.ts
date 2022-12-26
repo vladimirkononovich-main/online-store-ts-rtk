@@ -1,5 +1,4 @@
 import { configureStore } from "@reduxjs/toolkit";
-// import { IStoreInitialState } from "../models/dataModels";
 import dataSlice from "./dataSlice";
 
 let onlineStoreData;

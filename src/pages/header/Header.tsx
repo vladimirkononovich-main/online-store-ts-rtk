@@ -1,26 +1,15 @@
 import { useQuery } from "@apollo/client";
 import classNames from "classnames";
-import React, { SyntheticEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import {
-  GET_CATEGORY_NAMES,
-  GET_CURRENCIES,
-} from "../../queries/onlineStoreData";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
-import { setCurrencies } from "../../redux/dataSlice";
+import { GET_CATEGORY_NAMES } from "../../queries/onlineStoreData";
 import "./header.css";
 import DropDownCurrencies from "./dropCurrencies/DropDownCurrencies";
 import ErrorHandler from "../../components/ErrorHandler";
 import DropDownCart from "./dropCart/DropDownCart";
 
-interface IDropDowns {
-  dropDownCurrencies: boolean;
-  dropDownCart: boolean;
-}
-
 function Header() {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const { pathname } = useLocation();
   const { loading, error, data } = useQuery(GET_CATEGORY_NAMES);
   const [dropDowns, setDropDown] = useState({
@@ -86,7 +75,7 @@ function Header() {
       </nav>
       <div className="header__menu-wrapper">
         <DropDownCurrencies dropDowns={dropDowns} setDropDown={setDropDown} />
-        <DropDownCart dropDowns={dropDowns} setDropDown={setDropDown} hideDropDownsClick={hideDropDownsClick}/>
+        <DropDownCart dropDowns={dropDowns} setDropDown={setDropDown} />
       </div>
     </div>
   );

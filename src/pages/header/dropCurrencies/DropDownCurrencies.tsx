@@ -3,7 +3,6 @@ import classNames from "classnames";
 import * as _ from "lodash";
 import React, { useEffect } from "react";
 import ErrorHandler from "../../../components/ErrorHandler";
-// import { Currency } from "../../../models/dataModels";
 import { GET_CURRENCIES } from "../../../queries/onlineStoreData";
 import { setCurrentCurrency } from "../../../redux/dataSlice";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks/hooks";
@@ -13,13 +12,11 @@ import "./dropDownCurrencies.css";
 interface IDropDownCurrenciesProps {
   dropDowns: IDropDowns;
   setDropDown: (value: IDropDowns) => void;
-  // hideDropDowns: () => void;
 }
 
 function DropDownCurrencies({
   setDropDown,
   dropDowns,
-  // hideDropDowns,
 }: IDropDownCurrenciesProps) {
   const { loading, error, data } = useQuery(GET_CURRENCIES);
   const { currentCurrency } = useAppSelector((state) => state.onlineStoreData);
@@ -41,9 +38,6 @@ function DropDownCurrencies({
         className="currency-label"
         onClick={(e) => {
           e.stopPropagation();
-          // document.body.addEventListener("click", hideDropDowns);
-          // document.body.addEventListener("keydown", hideDropDowns);
-
           setDropDown({
             dropDownCart: false,
             dropDownCurrencies: !dropDowns.dropDownCurrencies,
@@ -58,7 +52,6 @@ function DropDownCurrencies({
         })}
         onClick={(e) => {
           e.stopPropagation();
-          // document.body.addEventListener("click", hideDropDowns);
           setDropDown({
             dropDownCart: false,
             dropDownCurrencies: !dropDowns.dropDownCurrencies,

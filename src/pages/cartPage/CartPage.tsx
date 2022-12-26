@@ -1,5 +1,5 @@
 import _ from "lodash";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ProductAttribute from "../../components/ProductAttributes";
 import ProductPrice from "../../components/ProductPrice";
 import ProductQuantity from "../../components/ProductQuantity";

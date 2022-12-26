@@ -6,7 +6,7 @@ import ErrorHandler from "../../components/ErrorHandler";
 import ProductPrice from "../../components/ProductPrice";
 import { GET_CATEGORY_PRODUCTS } from "../../queries/onlineStoreData";
 import { addProductToCart } from "../../redux/dataSlice";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
+import { useAppDispatch } from "../../redux/hooks/hooks";
 import "./categoryPage.css";
 
 function CategoryPage() {

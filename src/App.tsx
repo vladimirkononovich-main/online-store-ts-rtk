@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Outlet, Route, Routes } from "react-router-dom";
-import "./App.css";
 import CartPage from "./pages/cartPage/CartPage";
 import CategoryPage from "./pages/categoryPage/CategoryPage";
 import Header from "./pages/header/Header";
@@ -21,10 +20,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route path="category/:categoryId" element={<CategoryPage />} />
-          <Route
-            path="category/:categoryId/:productId"
-            element={<ProductPage />}
-          />
+          <Route path="category/:categoryId/:productId" element={<ProductPage />} />
           <Route path="category/:categoryId/cart" element={<CartPage />} />
         </Route>
       </Routes>

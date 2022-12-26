@@ -1,9 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import _, { result } from "lodash";
-import {
-  ICartProducts,
-  // IStoreInitialState,
-} from "../models/dataModels";
+import _ from "lodash";
+import { ICartProducts } from "../models/dataModels";
 import { Currency, GetCurrenciesQuery } from "../__generated__/graphql";
 
 interface IStoreInitialState {
