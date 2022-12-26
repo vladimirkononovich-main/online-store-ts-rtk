@@ -4,7 +4,7 @@ import * as _ from "lodash";
 import React, { useEffect } from "react";
 import ErrorHandler from "../../../components/ErrorHandler";
 import { GET_CURRENCIES } from "../../../queries/onlineStoreData";
-import { setCurrentCurrency } from "../../../redux/dataSlice";
+import { setCurrencies, setCurrentCurrency } from "../../../redux/dataSlice";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks/hooks";
 import { IDropDowns } from "../headerModels";
 import "./dropDownCurrencies.css";
@@ -21,6 +21,12 @@ function DropDownCurrencies({
   const { loading, error, data } = useQuery(GET_CURRENCIES);
   const { currentCurrency } = useAppSelector((state) => state.onlineStoreData);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (!loading) {
+      dispatch(setCurrencies(data!));
+    }
+  }, [data]);
 
   if (loading) {
     return (
