@@ -23,31 +23,30 @@ function Header() {
     }
   });
 
-  function hideDropDownsKeydown(ev: KeyboardEvent) {
-    if (ev.code === "Escape") {
-      setDropDown({
-        dropDownCurrencies: false,
-        dropDownCart: false,
-      });
-      document.body.removeEventListener("keydown", hideDropDownsKeydown);
-      document.body.removeEventListener("click", hideDropDownsClick);
-    }
-  }
-  function hideDropDownsClick(ev: MouseEvent) {
+  const hideDropDowns = () => {
     setDropDown({
       dropDownCurrencies: false,
       dropDownCart: false,
     });
     document.body.removeEventListener("keydown", hideDropDownsKeydown);
     document.body.removeEventListener("click", hideDropDownsClick);
-  }
+  };
+
+  const hideDropDownsKeydown = (ev: KeyboardEvent) => {
+    if (ev.code !== "Escape") return;
+    hideDropDowns();
+  };
+
+  const hideDropDownsClick = () => {
+    hideDropDowns();
+  };
 
   useEffect(() => {
     if (dropDowns.dropDownCart || dropDowns.dropDownCurrencies) {
       document.body.addEventListener("keydown", hideDropDownsKeydown);
       document.body.addEventListener("click", hideDropDownsClick);
     }
-  }, [dropDowns]);
+  });
 
   return (
     <div className="header">
